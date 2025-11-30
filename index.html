@@ -1,101 +1,238 @@
-import React, { useState } from 'react';
-import { ArrowRight, Menu, X } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foci Capital</title>
 
-export default function FociCapital() {
-  const [email, setEmail] = useState('');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Email submitted:', email);
-    setEmail('');
-  };
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: #222;
+    }
 
-  return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Navigation */}
-      <nav className="w-full py-6 px-8 border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="text-sm tracking-[0.2em] uppercase font-light">FOCI CAPITAL</div>
-            
-            <div className="hidden md:flex items-center space-x-10">
-              <a href="#portfolio" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Portfolio</a>
-              <a href="#team" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Team</a>
-              <a href="#about" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">About</a>
-              <a href="#contact" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Contact</a>
-            </div>
+    /* HEADER */
+    header {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 18px;
+      font-weight: 500;
+      border-bottom: 1px solid #eee;
+    }
 
-            <button 
-              className="md:hidden text-gray-900"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </nav>
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-white z-40 pt-20 px-8">
-          <div className="flex flex-col space-y-6">
-            <a href="#portfolio" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Portfolio</a>
-            <a href="#team" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Team</a>
-            <a href="#about" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="#contact" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Contact</a>
-          </div>
-        </div>
-      )}
+    .hero h1 {
+      font-size: 60px;
+      font-weight: 300;
+      line-height: 1.1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-      {/* Hero Section */}
-      <section className="flex-1 flex items-center justify-center px-8 py-32 md:py-40">
-        <div className="text-center max-w-5xl">
-          <h1 className="text-[3.5rem] sm:text-[5rem] md:text-[6.5rem] leading-[1.1] font-extralight tracking-tight text-gray-900">
-            Building the<br/>
-            future together
-          </h1>
-        </div>
-      </section>
+    /* MAILING LIST SECTION */
+    .mailing-section {
+      background-color: #009e73;
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
+    }
 
-      {/* Mailing List Section */}
-      <section className="bg-[#00a67e] py-20 px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4 tracking-wide">
-            JOIN OUR MAILING LIST
-          </h2>
-          <p className="text-white/90 text-lg mb-10 font-light">
-            Get the best insights from the Professionals
-          </p>
-          
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1 px-6 py-4 bg-[#00a67e] border-2 border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:border-white transition-colors font-light"
-            />
-            <button 
-              type="submit"
-              className="px-8 py-4 bg-white text-[#00a67e] font-light flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors whitespace-nowrap"
-            >
-              Join
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </form>
-        </div>
-      </section>
+    .mailing-section h2 {
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
 
-      {/* Footer */}
-      <footer className="py-8 px-8 bg-white border-t border-gray-100">
-        <div className="max-w-[1400px] mx-auto text-center">
-          <div className="text-sm text-gray-600 font-light">
-            © 2025 Foci Capital. All rights reserved.
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
+    .mailing-section p {
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    .mail-form {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 0;
+    }
+
+    .mail-form input {
+      padding: 14px 18px;
+      width: 260px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .mail-form button {
+      padding: 14px 22px;
+      border: none;
+      background: white;
+      color: #009e73;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .mail-form button:hover {
+      opacity: 0.9;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .message.success {
+      color: #dfffe9;
+    }
+
+    .message.error {
+      color: #ffe6e6;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #eee;
+      margin-top: 40px;
+    }
+
+    /* ===== RESPONSIVE STYLES ===== */
+    @media (max-width: 768px) {
+      header {
+        padding: 14px 16px;
+        font-size: 16px;
+      }
+
+      .hero {
+        padding: 60px 16px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .mailing-section {
+        padding: 50px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 16px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .mail-form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .mail-form input {
+        width: 100%;
+        border-radius: 3px 3px 0 0;
+        margin-bottom: 8px;
+      }
+
+      .mail-form button {
+        width: 100%;
+        border-radius: 0 0 3px 3px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    FOCI CAPITAL
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Building the<br>future together</h1>
+  </section>
+
+  <!-- MAILING LIST -->
+  <section class="mailing-section">
+    <h2>JOIN OUR MAILING LIST</h2>
+    <p>Get the best insights from the Professionals</p>
+
+    <form class="mail-form" id="mail-form">
+      <input
+        type="email"
+        id="email-input"
+        placeholder="Enter your email"
+        required
+      />
+      <button type="submit">Join →</button>
+    </form>
+
+    <div id="form-message" class="message"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Foci Capital. All rights reserved.
+  </footer>
+
+  <!-- SIMPLE EMAIL STORAGE LOGIC -->
+  <script>
+    const form = document.getElementById("mail-form");
+    const emailInput = document.getElementById("email-input");
+    const messageEl = document.getElementById("form-message");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+
+      // basic validation
+      if (!email || !email.includes("@")) {
+        messageEl.textContent = "Please enter a valid email address.";
+        messageEl.className = "message error";
+        return;
+      }
+
+      // get existing list from localStorage
+      const stored = localStorage.getItem("mailingList");
+      const mailingList = stored ? JSON.parse(stored) : [];
+
+      // avoid duplicates
+      if (!mailingList.includes(email)) {
+        mailingList.push(email);
+        localStorage.setItem("mailingList", JSON.stringify(mailingList));
+      }
+
+      // feedback to user
+      messageEl.textContent = "Thank you for joining our mailing list!";
+      messageEl.className = "message success";
+
+      // clear input
+      emailInput.value = "";
+      console.log("Current stored emails:", mailingList);
+    });
+  </script>
+</body>
+</html>
