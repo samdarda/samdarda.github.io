@@ -1,296 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Companies – Coming Soon | Foci Capital</title>
+import React, { useState } from 'react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 
-  <!-- Google Fonts for modern serif and sans-serif combo -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+export default function FociCapital() {
+  const [email, setEmail] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  <style>
-    :root {
-      --bg-light: #f5f4f0;
-      --bg-card: #ffffff;
-      --text-primary: #111827;
-      --text-secondary: #6b7280;
-      --accent: #0f3d2e;   /* Dark green accent for a sophisticated feel */
-      --border-light: #e5e7eb;
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Email submitted:', email);
+    setEmail('');
+  };
 
-    * {
-      box-sizing: border-box;
-    }
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Navigation */}
+      <nav className="w-full py-6 px-8 border-b border-gray-100">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="text-sm tracking-[0.2em] uppercase font-light">FOCI CAPITAL</div>
+            
+            <div className="hidden md:flex items-center space-x-10">
+              <a href="#portfolio" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Portfolio</a>
+              <a href="#team" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Team</a>
+              <a href="#about" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">About</a>
+              <a href="#contact" className="text-sm text-gray-600 hover:text-gray-900 transition-colors tracking-wide">Contact</a>
+            </div>
 
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #f8f7f3 0%, #f5f4f0 40%, #f2f2ee 100%);
-      color: var(--text-primary);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* Navigation Styles */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(15, 61, 46, 0.07);
-    }
-
-    .logo {
-      font-size: 0.9rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-mark {
-      width: 18px;
-      height: 18px;
-      border-radius: 4px;
-      border: 1px solid var(--accent);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 10px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-secondary);
-    }
-
-    .nav-links span {
-      opacity: 0.9;
-    }
-
-    .nav-links span.is-active {
-      color: var(--accent);
-    }
-
-    /* Hero Section Styles */
-    .hero {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 56px;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
-    }
-
-    .title {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(2.4rem, 4vw, 3.1rem);
-      line-height: 1.1;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-    }
-
-    .subtitle {
-      font-size: 0.98rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      max-width: 32rem;
-      margin-bottom: 32px;
-    }
-
-    .meta {
-      display: flex;
-      gap: 16px;
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .meta-label {
-      font-weight: 500;
-      color: var(--accent);
-    }
-
-    /* Panel Section – Coming Soon Card */
-    .panel {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      border: 1px solid var(--border-light);
-      padding: 24px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      position: relative;
-    }
-
-    .panel-tag {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-secondary);
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f3f4f6;
-      margin-bottom: 16px;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #10b981;
-    }
-
-    .panel-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.2rem;
-      margin: 0 0 8px;
-      color: var(--text-primary);
-    }
-
-    .panel-text {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-    }
-
-    .soon-label {
-      font-size: 2.1rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      color: var(--accent);
-    }
-
-    .pill-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .pill {
-      font-size: 0.75rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      color: var(--text-secondary);
-    }
-
-    /* Footer Styles */
-    .footer {
-      padding-top: 18px;
-      border-top: 1px solid rgba(15, 23, 42, 0.06);
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .footer span {
-      opacity: 0.9;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Top Nav -->
-    <header class="nav">
-      <div class="logo">
-        <span class="logo-mark" aria-hidden="true"></span>
-        <span>Foci Capital</span>
-      </div>
-      <nav class="nav-links" aria-label="Main navigation">
-        <span>Our Founders</span>
-        <span class="is-active">Our Companies</span>
-        <span>Stories</span>
+            <button 
+              className="md:hidden text-gray-900"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
       </nav>
-    </header>
 
-    <!-- Main Content -->
-    <main class="hero">
-      <!-- Left Column -->
-      <div>
-        <div class="eyebrow">Our Companies</div>
-        <h1 class="title">
-          <span>Curating our</span>
-          <span>investment portfolio.</span>
-        </h1>
-        <p class="subtitle">
-          A new way to explore the companies we support—categorized by stage, sector, and impact.
-        </p>
-
-        <div class="meta">
-          <div>
-            <span class="meta-label">Status&nbsp;&nbsp;</span>
-            Coming Soon
-          </div>
-          <div>
-            <span class="meta-label">Launch Window&nbsp;&nbsp;</span>
-            2025
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-white z-40 pt-20 px-8">
+          <div className="flex flex-col space-y-6">
+            <a href="#portfolio" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Portfolio</a>
+            <a href="#team" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Team</a>
+            <a href="#about" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>About</a>
+            <a href="#contact" className="text-xl text-gray-600" onClick={() => setMobileMenuOpen(false)}>Contact</a>
           </div>
         </div>
-      </div>
+      )}
 
-      <!-- Right Column / Coming Soon Card -->
-      <aside class="panel" aria-label="Coming soon">
-        <div class="panel-tag">
-          <span class="dot"></span>
-          In Progress
+      {/* Hero Section */}
+      <section className="flex-1 flex items-center justify-center px-8 py-32 md:py-40">
+        <div className="text-center max-w-5xl">
+          <h1 className="text-[3.5rem] sm:text-[5rem] md:text-[6.5rem] leading-[1.1] font-extralight tracking-tight text-gray-900">
+            Building the<br/>
+            future together
+          </h1>
         </div>
-        <div class="soon-label">Coming&nbsp;Soon</div>
-        <h2 class="panel-title">Discover our companies in a new way</h2>
-        <p class="panel-text">
-          Filter, explore, and read stories about the innovative companies driving our investments.
-        </p>
+      </section>
 
-        <div class="pill-row">
-          <div class="pill">Spotlights</div>
-          <div class="pill">All Companies</div>
-          <div class="pill">Filters</div>
+      {/* Mailing List Section */}
+      <section className="bg-[#00a67e] py-20 px-8">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4 tracking-wide">
+            JOIN OUR MAILING LIST
+          </h2>
+          <p className="text-white/90 text-lg mb-10 font-light">
+            Get the best insights from the Professionals
+          </p>
+          
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="flex-1 px-6 py-4 bg-[#00a67e] border-2 border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:border-white transition-colors font-light"
+            />
+            <button 
+              type="submit"
+              className="px-8 py-4 bg-white text-[#00a67e] font-light flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors whitespace-nowrap"
+            >
+              Join
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </form>
         </div>
-      </aside>
-    </main>
+      </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <span>© 2025 Foci Capital</span>
-      <span>Portfolio experience under development.</span>
-    </footer>
-  </div>
-</body>
-</html>
+      {/* Footer */}
+      <footer className="py-8 px-8 bg-white border-t border-gray-100">
+        <div className="max-w-[1400px] mx-auto text-center">
+          <div className="text-sm text-gray-600 font-light">
+            © 2025 Foci Capital. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
