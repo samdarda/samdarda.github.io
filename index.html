@@ -177,7 +177,7 @@
   <!-- MAILING LIST -->
   <section class="mailing-section">
     <h2>JOIN OUR MAILING LIST</h2>
-    <p>Get the best insights from the Professionals</p>
+    <p>Get the best insights from the professionals</p>
 
     <form class="mail-form" id="mail-form">
       <input
@@ -197,42 +197,53 @@
     © 2025 Foci Capital. All rights reserved.
   </footer>
 
-  <!-- SIMPLE EMAIL STORAGE LOGIC -->
-  <script>
-    const form = document.getElementById("mail-form");
-    const emailInput = document.getElementById("email-input");
-    const messageEl = document.getElementById("form-message");
+  <!-- SAVE EMAIL TO GOOGLE SHEETS -->
+<script>
+  const form = document.getElementById("mail-form");
+  const emailInput = document.getElementById("email-input");
+  const messageEl = document.getElementById("form-message");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+  // 👉 PASTE YOUR GOOGLE APPS SCRIPT URL HERE
+  const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/1pWM-mafaHy9PLzVgmUp2JBDpzGJWciBlTbp_tdpv8yI/edit?usp=sharing";
 
-      const email = emailInput.value.trim();
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      // basic validation
-      if (!email || !email.includes("@")) {
-        messageEl.textContent = "Please enter a valid email address.";
+    const email = emailInput.value.trim();
+
+    // basic validation
+    if (!email || !email.includes("@")) {
+      messageEl.textContent = "Please enter a valid email address.";
+      messageEl.className = "message error";
+      return;
+    }
+
+    messageEl.textContent = "Please wait...";
+    messageEl.className = "message info";
+
+    try {
+      // send email to Google Sheets
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ email: email })
+      });
+
+      const result = await response.json();
+      console.log("Response from Google Script:", result);
+
+      if (result.success) {
+        messageEl.textContent = "Thank you for joining our mailing list!";
+        messageEl.className = "message success";
+        emailInput.value = "";
+      } else {
+        messageEl.textContent = "Error: could not save. Try again.";
         messageEl.className = "message error";
-        return;
       }
 
-      // get existing list from localStorage
-      const stored = localStorage.getItem("mailingList");
-      const mailingList = stored ? JSON.parse(stored) : [];
-
-      // avoid duplicates
-      if (!mailingList.includes(email)) {
-        mailingList.push(email);
-        localStorage.setItem("mailingList", JSON.stringify(mailingList));
-      }
-
-      // feedback to user
-      messageEl.textContent = "Thank you for joining our mailing list!";
-      messageEl.className = "message success";
-
-      // clear input
-      emailInput.value = "";
-      console.log("Current stored emails:", mailingList);
-    });
-  </script>
-</body>
-</html>
+    } catch (error) {
+      console.error(error);
+      messageEl.textContent = "Network error. Please try again.";
+      messageEl.className = "message error";
+    }
+  });
+</script>
