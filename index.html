@@ -62,6 +62,10 @@
 
       width: 100%;
 
+      max-width: 100%;
+
+      height: 81px;
+
       padding: 24px 40px;
 
       font-size: 14px;
@@ -76,9 +80,15 @@
 
       display: flex;
 
+      flex-wrap: wrap;
+
       justify-content: space-between;
 
       align-items: center;
+
+      box-sizing: border-box;
+
+      text-align: right;
 
     }
 
@@ -94,6 +104,16 @@
 
       color: #1a1a1a;
 
+      text-decoration: none;
+
+      display: inline-block;
+
+    }
+
+    header .logo:hover {
+
+      opacity: 0.7;
+
     }
 
 
@@ -105,6 +125,8 @@
       align-items: center;
 
       gap: 32px;
+
+      margin-left: auto;
 
     }
 
@@ -184,7 +206,7 @@
 
       text-align: center;
 
-      padding: 100px 20px;
+      padding: 40px 24px;
 
     }
 
@@ -194,9 +216,25 @@
 
       max-width: 800px;
 
-      margin: 0 auto 40px;
+      display: flex;
 
-      padding: 80px 60px;
+      justify-content: center;
+
+      align-items: center;
+
+      flex-direction: column;
+
+      gap: 0px;
+
+      margin: 20px auto 40px auto;
+
+      padding-top: 20px;
+
+      padding-bottom: 20px;
+
+      padding-left: 0px;
+
+      padding-right: 0px;
 
       background-color: #FBF7F0;
 
@@ -205,6 +243,8 @@
       border-radius: 0;
 
       position: relative;
+
+      box-sizing: content-box;
 
     }
 
@@ -394,9 +434,11 @@
 
     footer {
 
+      display: grid;
+
       text-align: center;
 
-      padding: 40px 10px;
+      padding: 30px 10px;
 
       font-size: 13px;
 
@@ -409,6 +451,16 @@
       margin-top: 0;
 
       letter-spacing: 0.2px;
+
+      border-style: solid;
+
+      border-width: 1px;
+
+      border-color: rgba(0, 0, 0, 1);
+
+      box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+
+      flex-wrap: wrap;
 
     }
 
@@ -458,7 +510,7 @@
 
       .hero {
 
-        padding: 80px 20px 60px;
+        padding: 20px 20px 20px;
 
       }
 
@@ -474,7 +526,7 @@
 
       .mailing-section {
 
-        padding: 80px 20px;
+        padding: 40px 24px;
 
       }
 
@@ -484,7 +536,7 @@
 
         padding: 60px 40px;
 
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
       }
 
@@ -584,7 +636,7 @@
 
         padding: 50px 30px;
 
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
       }
 
@@ -666,15 +718,15 @@
 
   <header>
 
-    <div class="logo">FOCI CAPITAL</div>
+    <a href="index.html" class="logo">FOCI CAPITAL</a>
 
     <nav>
 
-      <a href="#about">ABOUT US</a>
+      <a>ABOUT US</a>
 
-      <a href="#thinking">THINKING</a>
+      <a href="thinking.html">THINKING</a>
 
-      <a href="#contact">CONTACT US</a>
+      <a href="mailto:darda.samkeet@gmail.com">CONTACT US</a>
 
     </nav>
 
@@ -793,26 +845,57 @@
     try {
 
       // send email to Google Sheets
+
       const response = await fetch(SCRIPT_URL, {
+
         method: "POST",
+
         body: new URLSearchParams({ email: email })
+
       });
+
+
+
       const result = await response.json();
+
       console.log("Response from Google Script:", result);
+
+
+
       if (result.success) {
+
         messageEl.textContent = "Thank you for joining our mailing list!";
+
         messageEl.className = "message success";
+
         emailInput.value = "";
+
       } else {
+
         messageEl.textContent = "Error: could not save. Try again.";
+
         messageEl.className = "message error";
+
       }
+
+
+
     } catch (error) {
+
       console.error(error);
+
       messageEl.textContent = "Network error. Please try again.";
+
       messageEl.className = "message error";
+
     }
+
   });
+
 </script>
+
+
 </body>
+
 </html>
+
