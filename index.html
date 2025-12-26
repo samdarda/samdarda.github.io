@@ -793,56 +793,26 @@
     try {
 
       // send email to Google Sheets
-
       const response = await fetch(SCRIPT_URL, {
-
         method: "POST",
-
         body: new URLSearchParams({ email: email })
-
       });
-
-
-
       const result = await response.json();
-
       console.log("Response from Google Script:", result);
-
-
-
       if (result.success) {
-
         messageEl.textContent = "Thank you for joining our mailing list!";
-
         messageEl.className = "message success";
-
         emailInput.value = "";
-
       } else {
-
         messageEl.textContent = "Error: could not save. Try again.";
-
         messageEl.className = "message error";
-
       }
-
-
-
     } catch (error) {
-
       console.error(error);
-
       messageEl.textContent = "Network error. Please try again.";
-
       messageEl.className = "message error";
-
     }
-
   });
-
 </script>
-
-
 </body>
-
 </html>
